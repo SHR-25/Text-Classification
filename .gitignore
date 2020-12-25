@@ -131,3 +131,4 @@ dmypy.json
 /source_data_test/
 /data_train/
 /data_test/
+/pkls/

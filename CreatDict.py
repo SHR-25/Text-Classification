@@ -1,3 +1,8 @@
+"""
+4.建立词典
+"""
+import os
+import pickle
 from collections import Counter
 
 import jieba.analyse
@@ -16,6 +21,13 @@ def init():
             contents[CLASS_NAME_EN] = ''.join(file.readlines())
             # 实际上，基于Counter数据结构的word_counter就是词频统计结果
             word_counters[CLASS_NAME_EN] = Counter(contents[CLASS_NAME_EN].split())
+        # with open('data_train/' + CLASS_NAME_EN + '/TF.txt', 'w', encoding='utf-8') as file:
+        #     for j, k in dict(word_counters[CLASS_NAME_EN]).items():
+        #         file.write(j + ':' + str(k) + '\n')
+        if not os.path.exists('pkls/' + CLASS_NAME_EN):
+            os.mkdir('pkls/' + CLASS_NAME_EN)
+        with open('pkls/' + CLASS_NAME_EN + '/TF.pkl', 'wb') as file:
+            pickle.dump(dict(word_counters[CLASS_NAME_EN]), file)
 
 
 def chi_square(word: str, class_str: str):
@@ -48,7 +60,7 @@ def chi_square(word: str, class_str: str):
 
 if __name__ == '__main__':
     init()
-    # 先利用jieba内置的TF/IDF方法加权，得到前1000个关键词(得到1000*2的一个矩阵)，其权值再与卡方检验值相乘，排序后的前500个词为关键词
+    # 先利用jieba内置的TF/IDF方法加权，得到前1000个关键词(得到1000*2的一个矩阵)，其权值再与卡方检验值相乘，每个类排序后的前500个词为关键词
     for class_name_en in class_list.values():
         topK = 1000
         if len(word_counters[class_name_en]) < 1000:
@@ -65,3 +77,12 @@ if __name__ == '__main__':
         with open('data_train/' + class_name_en + '/dict.txt', 'w', encoding='utf-8') as f:
             for i in key_words:
                 f.write(i[0] + ':' + str(i[1]) + '\n')
+
+    V = []
+    for class_name_en in class_list.values():
+        with open('data_train/' + class_name_en + '/dict.txt', 'r', encoding='utf-8') as f:
+            for line in f.readlines():
+                V.append(line.split(':')[0])
+    V_dict = Counter(V)  # 2410个词
+    with open('data_train/key_words.txt', 'w', encoding='utf-8') as f:
+        f.write('\n'.join(V_dict.keys()))
