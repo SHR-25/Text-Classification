@@ -2,9 +2,8 @@
 预处理部分3：
 整合数据至一个文件all.txt，避免重复IO
 """
-
-class_list = {'财经': 'Economics', '房产': 'House', '股票': 'Stock', '家居': 'Household', '教育': 'Education', '科技': 'Technology',
-              '时政': 'Politics', '体育': 'PE', '游戏': 'Game', '娱乐': 'Entertainment'}
+class_list = {'财经': 'Economics', '房产': 'House', '社会': 'Society', '时尚': 'Fashion', '教育': 'Education',
+              '科技': 'Technology', '时政': 'Politics', '体育': 'PE', '游戏': 'Game', '娱乐': 'Entertainment'}
 
 if __name__ == '__main__':
     all_data_test = ''

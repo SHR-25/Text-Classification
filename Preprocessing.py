@@ -8,8 +8,9 @@ import os
 import jieba
 import jieba.posseg as ps
 
-class_list = {'财经': 'Economics', '房产': 'House', '股票': 'Stock', '家居': 'Household', '教育': 'Education', '科技': 'Technology',
-              '时政': 'Politics', '体育': 'PE', '游戏': 'Game', '娱乐': 'Entertainment'}
+class_list = {'财经': 'Economics', '房产': 'House', '社会': 'Society', '时尚': 'Fashion', '教育': 'Education',
+              '科技': 'Technology', '时政': 'Politics', '体育': 'PE', '游戏': 'Game', '娱乐': 'Entertainment'}
+
 with open('stop_words_ch.txt', 'r') as file:
     stop_words = [i.strip() for i in file.readlines()]
 with open('stop_sign.txt', 'r', encoding='utf-8') as file:
