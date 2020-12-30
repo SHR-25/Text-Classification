@@ -52,6 +52,8 @@ def chi_square(word: str, class_str: str):
                         parm_D += 1
     # print('chisq-statistic=%.4f, p-value=%.4f, df=%i expected_frep=%s' % kf)
     # 返回卡方值，卡方值越大说明相关性越高，该词在该类中越关键
+    if parm_B == 0:
+        return 1
     return (parm_A + parm_B + parm_C + parm_D) * ((parm_A * parm_D - parm_B * parm_C) ** 2) / (
             (parm_A + parm_C) * (parm_A + parm_B) * (parm_D + parm_B) * (parm_C + parm_D))
 
@@ -70,8 +72,8 @@ if __name__ == '__main__':
         for tag, value in tags_dic.items():
             print("class: %s index: %d tag: %s\t\t weight: %f" % (class_name_en, index, tag, value))
             index += 1
-            # tags_dic[tag] = value * chi_square(tag, class_name_en)
-            tags_dic[tag] = value
+            tags_dic[tag] = value * chi_square(tag, class_name_en)
+            # tags_dic[tag] = value
         key_words = Counter(tags_dic).most_common(500)
         with open('data_train/' + class_name_en + '/dict.txt', 'w', encoding='utf-8') as f:
             for i in key_words:
