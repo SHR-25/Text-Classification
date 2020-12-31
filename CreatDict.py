@@ -20,9 +20,6 @@ def init():
             contents[CLASS_NAME_EN] = ''.join(file.readlines())
             # 实际上，基于Counter数据结构的word_counter就是词频统计结果
             word_counters[CLASS_NAME_EN] = Counter(contents[CLASS_NAME_EN].split())
-        # with open('data_train/' + CLASS_NAME_EN + '/TF.txt', 'w', encoding='utf-8') as file:
-        #     for j, k in dict(word_counters[CLASS_NAME_EN]).items():
-        #         file.write(j + ':' + str(k) + '\n')
         if not os.path.exists('pkls/' + CLASS_NAME_EN):
             os.mkdir('pkls/' + CLASS_NAME_EN)
         with open('pkls/' + CLASS_NAME_EN + '/TF.pkl', 'wb') as file:
@@ -78,23 +75,17 @@ if __name__ == '__main__':
         with open('data_train/' + class_name_en + '/dict.txt', 'w', encoding='utf-8') as f:
             for i in key_words:
                 f.write(i[0] + ':' + str(i[1]) + '\n')
-    # 先利用jieba内置的TF/IDF方法加权，得到前1000个关键词(得到1000*2的一个矩阵)，其权值再与卡方检验值相乘，每个类排序后的前500个词为关键词
-    # class_name_en = 'Society'
-    # topK = 1000
-    # if len(word_counters[class_name_en]) < 1000:
-    #     topK = len(word_counters[class_name_en])
-    # tags = jieba.analyse.extract_tags(contents[class_name_en], topK=topK,
+
+    # with open('data_train/all.txt', 'r', encoding='utf-8') as f:
+    #     content = f.read()
+    # tags = jieba.analyse.extract_tags(content, topK=5000,
     #                                   withWeight=True)
-    # tags_dic = dict(tags)
-    # index = 0
-    # for tag, value in tags_dic.items():
-    #     print("class: %s index: %d tag: %s\t\t weight: %f" % (class_name_en, index, tag, value))
-    #     index += 1
-    #     tags_dic[tag] = value * chi_square(tag, class_name_en)
-    # key_words = Counter(tags_dic).most_common(500)
-    # with open('data_train/' + class_name_en + '/dict.txt', 'w', encoding='utf-8') as f:
+    # key_words = dict(tags).keys()
+    # with open('data_train/dict.txt', 'w', encoding='utf-8') as f:
     #     for i in key_words:
-    #         f.write(i[0] + ':' + str(i[1]) + '\n')
+    #         f.write(i + '\n')
+    # with open('pkls/dict.pkl', 'wb') as f:
+    #     pickle.dump(list(key_words), f)
 
     V = []
     for class_name_en in class_list.values():

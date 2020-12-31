@@ -5,9 +5,13 @@ import pickle
 import time
 
 import numpy as np
+import pandas as pd
 from scipy.sparse import load_npz
 from sklearn import metrics
 from sklearn.linear_model import LogisticRegression
+
+class_list = {'财经': 'Economics', '房产': 'House', '社会': 'Society', '时尚': 'Fashion', '教育': 'Education',
+              '科技': 'Technology', '时政': 'Politics', '体育': 'PE', '游戏': 'Game', '娱乐': 'Entertainment'}
 
 coo_test = load_npz('coo_test.npz')
 # print(coo_test)
@@ -29,6 +33,9 @@ with open('pkls/LR_pre.pkl', 'wb') as f:
 
 # 混淆矩阵
 C = metrics.confusion_matrix(class_arr, pre)
+confusion_matrix = pd.DataFrame(C, columns=class_list.values(),
+                                index=class_list.values())
+confusion_matrix.to_csv('Confusion_Matrix_LR.csv')
 with open('pkls/confusion_matrix_LR.pkl', 'wb') as f:
     pickle.dump(C, f)
 print("混淆矩阵为：\n", C)

@@ -12,7 +12,6 @@ all_sum = 0
 for tup in df.itertuples():
     acc_sum += df.at[tup[0], tup[0]]
     all_sum += df[tup[0]].sum()
-print('总体准确率：' + str(acc_sum / all_sum))
 
 recall_all = 0
 precision_all = 0
